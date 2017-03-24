@@ -1,1 +1,1 @@
-include ':apps:iTools'
+include ':app:iTools'
