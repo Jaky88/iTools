@@ -17,6 +17,20 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_marginBottom="20dp">
-
+        <ImageView
+            android:id="@+id/dot_1"
+            android:src="@drawable/dot_shap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/dot_2"
+            android:src="@drawable/dot_shap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/dot_3"
+            android:src="@drawable/dot_shap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </RelativeLayout>

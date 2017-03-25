@@ -5,8 +5,9 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.onyx.itools.R;
-import com.onyx.itools.util.ActivityUtil;
-import com.onyx.itools.util.SharedPrefUtil;
+import com.onyx.itools.config.AppConfig;
+import com.onyx.itools.utils.ActivityUtil;
+import com.onyx.itools.utils.SharedPrefUtil;
 
 import butterknife.ButterKnife;
 
@@ -28,24 +29,15 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (isFirstOpen) {
-                    startGuideActivity();
+                    ActivityUtil.startActivity(SplashActivity.this, GuideActivity.class);
                 }else{
-                    startMainActivity();
+                    ActivityUtil.startActivity(SplashActivity.this, MainActivity.class);
                 }
             }
-        },2000);
+        },AppConfig.getInstance(this).getSplashDelay());
 
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
     }
-
-    private void startGuideActivity() {
-        ActivityUtil.startActivity(this, MainActivity.class);
-    }
-
-    private void startMainActivity() {
-        ActivityUtil.startActivity(this, GuideActivity.class);
-    }
-
 
 }

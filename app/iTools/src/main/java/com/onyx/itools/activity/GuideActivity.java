@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 
 import com.onyx.itools.R;
 import com.onyx.itools.adapter.GuideViewPagerAdapter;
-import com.onyx.itools.util.SharedPrefUtil;
+import com.onyx.itools.utils.SharedPrefUtil;
 
 import java.util.ArrayList;
 import java.util.List;

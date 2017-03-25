@@ -1,4 +1,4 @@
-package com.onyx.itools.util;
+package com.onyx.itools.utils;
 
 import android.app.Activity;
 import android.content.Intent;

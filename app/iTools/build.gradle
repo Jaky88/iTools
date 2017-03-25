@@ -41,5 +41,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.jakewharton:butterknife:8.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
+    compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+    compile "us.feras.mdv:markdownview:$rootProject.markdownviewVersion"
+    compile "de.hdodenhof:circleimageview:$rootProject.circleimageviewVersion"
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile "com.alibaba:fastjson:$rootProject.fastjsonVersion"
 
 }
