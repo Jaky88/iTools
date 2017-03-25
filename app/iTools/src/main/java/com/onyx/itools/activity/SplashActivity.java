@@ -1,6 +1,7 @@
 package com.onyx.itools.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.onyx.itools.R;
@@ -17,20 +18,25 @@ import butterknife.ButterKnife;
  * @Version: V1.0
  * @Description:
  */
-public class WelcomeActivity extends AppCompatActivity {
-
+public class SplashActivity extends AppCompatActivity {
+    boolean isFirstOpen = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        boolean isFirstOpen = SharedPrefUtil.getBoolean(this, SharedPrefUtil.FIRST_OPEN, true);
-        if (isFirstOpen) {
-            startGuideActivity();
-            return;
-        }
+        isFirstOpen = SharedPrefUtil.getBoolean(this, SharedPrefUtil.FIRST_OPEN, true);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isFirstOpen) {
+                    startGuideActivity();
+                }else{
+                    startMainActivity();
+                }
+            }
+        },2000);
 
-        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        startMainActivity();
     }
 
     private void startGuideActivity() {
@@ -38,7 +44,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void startMainActivity() {
-        ActivityUtil.startActivity(this, WelcomeGuideActivity.class);
+        ActivityUtil.startActivity(this, GuideActivity.class);
     }
 
 

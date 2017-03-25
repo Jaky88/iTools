@@ -25,7 +25,7 @@ import java.util.List;
  * @Version: V1.0
  * @Description: TODO
  */
-public class WelcomeGuideActivity extends AppCompatActivity implements View.OnClickListener {
+public class GuideActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewPager mViewPager;
     private GuideViewPagerAdapter mPagerAdapter;
     private List<View> mViewList;
@@ -68,7 +68,7 @@ public class WelcomeGuideActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPrefUtil.putBoolean(WelcomeGuideActivity.this, SharedPrefUtil.FIRST_OPEN, false);
+        SharedPrefUtil.putBoolean(GuideActivity.this, SharedPrefUtil.FIRST_OPEN, false);
         finish();
     }
 
@@ -127,10 +127,10 @@ public class WelcomeGuideActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void enterMainActivity() {
-        Intent intent = new Intent(WelcomeGuideActivity.this,
-                WelcomeActivity.class);
+        Intent intent = new Intent(GuideActivity.this,
+                SplashActivity.class);
         startActivity(intent);
-        SharedPrefUtil.putBoolean(WelcomeGuideActivity.this, SharedPrefUtil.FIRST_OPEN, false);
+        SharedPrefUtil.putBoolean(GuideActivity.this, SharedPrefUtil.FIRST_OPEN, false);
         finish();
     }
 
