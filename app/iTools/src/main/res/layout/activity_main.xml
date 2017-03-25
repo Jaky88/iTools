@@ -18,42 +18,53 @@
             android:id="@+id/rg_bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_navigation_height"
+            android:layout_marginBottom="@dimen/bottom_navigation_margin_bottom"
             android:orientation="horizontal">
             <RadioButton
                 android:id="@+id/rb_tab_1"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:button="@null"
-                android:drawableBottom="@drawable/logo"/>
+                android:text="Jack"
+                android:drawableTop="@mipmap/ic_launcher"/>
             <RadioButton
                 android:id="@+id/rb_tab_2"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:button="@null"
-                android:drawableBottom="@drawable/logo"/>
+                android:text="Jack"
+                android:drawableTop="@mipmap/ic_launcher"/>
             <RadioButton
                 android:id="@+id/rb_tab_3"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:button="@null"
-                android:drawableBottom="@drawable/logo"/>
+                android:text="Jack"
+                android:drawableTop="@mipmap/ic_launcher"/>
             <RadioButton
                 android:id="@+id/rb_tab_4"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:button="@null"
-                android:drawableBottom="@drawable/logo"/>
+                android:text="Jack"
+                android:drawableTop="@mipmap/ic_launcher"/>
             <RadioButton
                 android:id="@+id/rb_tab_5"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:button="@null"
-                android:drawableBottom="@drawable/logo"/>
+                android:text="Jack"
+                android:drawableTop="@mipmap/ic_launcher"/>
         </RadioGroup>
 
     </LinearLayout>

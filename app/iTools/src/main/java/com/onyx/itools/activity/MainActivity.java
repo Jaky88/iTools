@@ -20,7 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.onyx.itools.Fragment.ContentFragment;
+import com.onyx.itools.fragment.ContentFragment;
 import com.onyx.itools.R;
 
 /**

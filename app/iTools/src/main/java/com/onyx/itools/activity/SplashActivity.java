@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.onyx.itools.R;
-import com.onyx.itools.config.AppConfig;
+import com.onyx.itools.config.ConfigCenter;
 import com.onyx.itools.utils.ActivityUtil;
 import com.onyx.itools.utils.SharedPrefUtil;
 
@@ -34,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
                     ActivityUtil.startActivity(SplashActivity.this, MainActivity.class);
                 }
             }
-        },AppConfig.getInstance(this).getSplashDelay());
+        }, ConfigCenter.getInstance(this).getSplashDelay());
 
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);

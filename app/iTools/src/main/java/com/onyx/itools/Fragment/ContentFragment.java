@@ -1,4 +1,4 @@
-package com.onyx.itools.Fragment;
+package com.onyx.itools.fragment;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

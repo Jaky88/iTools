@@ -1,6 +1,8 @@
 package com.onyx.itools;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
 
 /**
  * @Copyright: Copyright © 2017 Onyx International Inc. All rights reserved.
@@ -11,4 +13,16 @@ import android.app.Application;
  * @Description: TODO
  */
 public class IToolsApplication extends Application{
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
+    private static IToolsApplication mInstance;
+    public  Handler getHandler() {
+        return mHandler;
+    }
+
+    public static IToolsApplication getInstance(){
+        if(mInstance == null){
+            mInstance = new IToolsApplication();
+        }
+        return mInstance;
+    }
 }

@@ -2,7 +2,6 @@ package com.onyx.itools.config;
 
 import android.content.Context;
 
-import com.onyx.itools.data.JsonObject;
 import com.onyx.itools.utils.RawResourceUtil;
 
 import java.util.Locale;
@@ -11,19 +10,19 @@ import java.util.Locale;
  * Created by 12345 on 2017/3/25.
  */
 
-public class AppConfig {
-    static private AppConfig mInstance;
-    static private String TAG = AppConfig.class.getSimpleName();
+public class ConfigCenter {
+    static private ConfigCenter mInstance;
+    static private String TAG = ConfigCenter.class.getSimpleName();
     static private Locale currentLocale = null;
-    private JsonObject mJson;
+    private JsonObject mJsonObject;
 
-    private AppConfig(Context context) {
-        mJson = jsonFromRawResource(context, "config");
+    private ConfigCenter(Context context) {
+        mJsonObject = jsonFromRawResource(context, "config");
     }
 
-    static public AppConfig getInstance(Context context) {
+    static public ConfigCenter getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new AppConfig(context);
+            mInstance = new ConfigCenter(context);
         }
         currentLocale = context.getResources().getConfiguration().locale;
         return mInstance;
@@ -42,6 +41,6 @@ public class AppConfig {
     }
 
     public int getSplashDelay() {
-        return mJson.getInt(ConstantValue.SPLASH_DELAY);
+        return mJsonObject.getInt(ConfigConstant.SPLASH_DELAY);
     }
 }

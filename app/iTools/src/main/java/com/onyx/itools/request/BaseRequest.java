@@ -1,15 +1,20 @@
-package com.onyx.itools.handler;
+package com.onyx.itools.request;
+
+import android.content.Context;
 
 /**
  * Created by 12345 on 2017/3/25.
  */
 public class BaseRequest {
+    public Context mContext;
     private String mRequestType;
     private volatile int mRequestId;
     private boolean mRunInBackground = false;
     static private volatile int mGlobalRequestId;
-    private volatile boolean mAbort = false;
     public boolean mLongTermJob = false;
+    public RequestCallback mCallback;
+    private volatile boolean mAbort = false;
+    private volatile boolean mAbortPendingTasks = true;
 
     public BaseRequest(String type) {
         mRequestType = type;
@@ -40,5 +45,9 @@ public class BaseRequest {
 
     public void setAbort(boolean abort) {
         mAbort = abort;
+    }
+
+    public boolean isAbortPendingTasks() {
+        return mAbortPendingTasks;
     }
 }

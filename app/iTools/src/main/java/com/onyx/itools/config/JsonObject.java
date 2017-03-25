@@ -1,6 +1,4 @@
-package com.onyx.itools.data;
-
-import android.util.Log;
+package com.onyx.itools.config;
 
 import com.alibaba.fastjson.JSONObject;
 
