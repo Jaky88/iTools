@@ -1,17 +1,15 @@
 package com.onyx.itools.activity;
 
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +18,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.onyx.itools.fragment.ContentFragment;
 import com.onyx.itools.R;
+import com.onyx.itools.fragment.ContentFragment;
+
+import java.util.ArrayList;
 
 /**
  * @Copyright: Copyright © 2017 Onyx International Inc. All rights reserved.
@@ -50,43 +50,40 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         initEvent();
     }
 
-    private void initData() {
+    private void initView() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeButtonEnabled(true);
+        mTitle = (String) getTitle();
+    }
+
+    private void initData() {
         menuLists = new ArrayList<String>();
         for (int i = 0; i < 5; i++) menuLists.add("菜单0" + i);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, menuLists);
         mDrawerList.setAdapter(adapter);
     }
 
-    private void initView() {
-        mActionBar = getSupportActionBar();
-        mTitle = (String) getTitle();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.mipmap.ic_launcher, R.string.drawer_open,R.string.drawer_close) {
+    private void initEvent() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.drawable.ic_drawer, R.string.drawer_open,R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 mActionBar.setTitle("请选择");
-                invalidateOptionsMenu(); // Call onPrepareOptionsMenu()
+                supportInvalidateOptionsMenu(); // Call onPrepareOptionsMenu()
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 mActionBar.setTitle(mTitle);
-                invalidateOptionsMenu();
+                supportInvalidateOptionsMenu();
             }
         };
-
+        mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        if(mActionBar != null){
-            mActionBar.setDisplayHomeAsUpEnabled(true);
-            mActionBar.setHomeButtonEnabled(true);
-        }
-    }
-
-    private void initEvent() {
         mDrawerList.setOnItemClickListener(this);
     }
 
@@ -99,9 +96,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -144,5 +140,29 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         fm.beginTransaction().replace(R.id.content_frame, contentFragment).commit();
         mDrawerLayout.closeDrawer(mDrawerList);
     }
+
+//    private void setupDrawerContent(NavigationView navigationView) {
+//        navigationView.setNavigationItemSelectedListener(
+//                new NavigationView.OnNavigationItemSelectedListener() {
+//                    @Override
+//                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+//                        switch (menuItem.getItemId()) {
+//                            case R.id.navigation_item_example:
+////                                switchToExample();
+//                                break;
+//                            case R.id.navigation_item_blog:
+////                                switchToBlog();
+//                                break;
+//                            case R.id.navigation_item_about:
+////                                switchToAbout();
+//                                break;
+//
+//                        }
+//                        menuItem.setChecked(true);
+//                        mDrawerLayout.closeDrawers();
+//                        return true;
+//                    }
+//                });
+//    }
 
 }

@@ -56,5 +56,5 @@ ext {
     umenganalyticsVersion = '6.0.3'
     markdownviewVersion = '1.1.0'
     eventbusVersion = '3.0.0'
-    circleimageviewVersion = '2.0.0'
+    circleimageviewVersion = '2.1.0'
 }
