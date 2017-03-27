@@ -23,7 +23,6 @@
             android:id="@+id/rg_bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_navigation_height"
-            android:layout_marginBottom="@dimen/bottom_navigation_margin_bottom"
             android:orientation="horizontal">
             <RadioButton
                 android:id="@+id/rb_tab_1"

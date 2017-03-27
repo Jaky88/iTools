@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.onyx.itools.R;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setHomeButtonEnabled(true);
         mTitle = (String) getTitle();
+        ImageView headerView = (ImageView) getLayoutInflater().inflate(R.layout.drawer_list_header_view, null);
+        mDrawerList.addHeaderView(headerView);
     }
 
     private void initData() {
@@ -131,9 +134,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+        if(position ==0) return;
         Fragment contentFragment = new ContentFragment();
         Bundle args = new Bundle();
-        args.putString("text", menuLists.get(position));
+        args.putString("text", menuLists.get(position-1));
         contentFragment.setArguments(args);
 
         FragmentManager fm = getSupportFragmentManager();

@@ -3,8 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/iTools/app-iTools.iml" filepath="$PROJECT_DIR$/app/iTools/app-iTools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/daolib/daolib.iml" filepath="$PROJECT_DIR$/daolib/daolib.iml" />
       <module fileurl="file://$PROJECT_DIR$/iTools.iml" filepath="$PROJECT_DIR$/iTools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/itools/itools.iml" filepath="$PROJECT_DIR$/app/itools/itools.iml" />
     </modules>
   </component>
 </project>
