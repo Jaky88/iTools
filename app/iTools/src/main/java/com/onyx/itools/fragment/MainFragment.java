@@ -13,17 +13,16 @@ import com.onyx.itools.R;
  * Created by 12345 on 2017/3/25.
  */
 
-public class ContentFragment extends Fragment {
+public class MainFragment extends Fragment {
     private TextView textView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_content, container, false);
-        textView = (TextView) view.findViewById(R.id.textView);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        textView = (TextView) view.findViewById(R.id.main_text);
 
-        String text = getArguments().getString("text");
-        textView.setText(text);
-
+//        String text = getArguments().getString("text");
+        textView.setText("MainFragment");
         return view;
     }
 

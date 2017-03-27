@@ -17,10 +17,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.onyx.itools.R;
-import com.onyx.itools.fragment.ContentFragment;
+import com.onyx.itools.fragment.MainFragment;
+import com.onyx.itools.fragment.MenuFragment;
 
 import java.util.ArrayList;
 
@@ -41,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     private ActionBarDrawerToggle mDrawerToggle;
     private String mTitle;
     ActionBar mActionBar;
+    private FragmentManager mManager;
+    private Fragment mCurrentFragment;
+    public static String MAIN_FRAGMENT ="main_fragment";
+    public static String MENU_FRAGMENT ="menu_fragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +65,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         mActionBar.setHomeButtonEnabled(true);
         mTitle = (String) getTitle();
         ImageView headerView = (ImageView) getLayoutInflater().inflate(R.layout.drawer_list_header_view, null);
+        LinearLayout footerView = (LinearLayout) getLayoutInflater().inflate(R.layout.drawer_list_footer_view, null);
         mDrawerList.addHeaderView(headerView);
+        mDrawerList.addFooterView(footerView);
+        setDefaultFragment();
     }
 
     private void initData() {
@@ -134,39 +143,47 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-        if(position ==0) return;
-        Fragment contentFragment = new ContentFragment();
-        Bundle args = new Bundle();
-        args.putString("text", menuLists.get(position-1));
-        contentFragment.setArguments(args);
-
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.content_frame, contentFragment).commit();
+        if(position ==0 || position == menuLists.size()+1) return;
+        showSpecifiedFragment(MENU_FRAGMENT, position);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-//    private void setupDrawerContent(NavigationView navigationView) {
-//        navigationView.setNavigationItemSelectedListener(
-//                new NavigationView.OnNavigationItemSelectedListener() {
-//                    @Override
-//                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-//                        switch (menuItem.getItemId()) {
-//                            case R.id.navigation_item_example:
-////                                switchToExample();
-//                                break;
-//                            case R.id.navigation_item_blog:
-////                                switchToBlog();
-//                                break;
-//                            case R.id.navigation_item_about:
-////                                switchToAbout();
-//                                break;
-//
-//                        }
-//                        menuItem.setChecked(true);
-//                        mDrawerLayout.closeDrawers();
-//                        return true;
-//                    }
-//                });
-//    }
+    private void setDefaultFragment() {
+        mManager = getSupportFragmentManager();
+        mCurrentFragment = new MainFragment();
+        mManager.beginTransaction().replace(R.id.main_container, mCurrentFragment,MAIN_FRAGMENT)
+                .commit();
+    }
+
+    public MainFragment getMainFragment(){
+        return  (MainFragment) mManager.findFragmentByTag(MAIN_FRAGMENT);
+    }
+
+    public MenuFragment getMenuFragment(int pos){
+        return  (MenuFragment) mManager.findFragmentByTag(MENU_FRAGMENT+pos);
+    }
+
+    public Fragment showSpecifiedFragment(String tag,int pos){
+        mManager = getSupportFragmentManager();
+        if(mCurrentFragment !=null){
+            mManager.beginTransaction().hide(mCurrentFragment).commit();
+        }
+        mCurrentFragment = mManager.findFragmentByTag(tag);
+        if(mCurrentFragment == null){
+            if(MAIN_FRAGMENT.equals(tag)){
+                mCurrentFragment = new MainFragment();
+            }else if(tag!=null && tag.contains(MENU_FRAGMENT+pos)){
+                mCurrentFragment = new MenuFragment();
+                Bundle args = new Bundle();
+                args.putString("text", menuLists.get(pos-1));
+                mCurrentFragment.setArguments(args);
+            }
+            mManager.beginTransaction()
+                    .add(R.id.main_container, mCurrentFragment,tag)
+                    .commit();
+        }
+        mManager.beginTransaction().show(mCurrentFragment).commit();
+        return  mCurrentFragment;
+    }
 
 }

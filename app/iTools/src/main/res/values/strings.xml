@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">iTools</string>
-    <string name="entry">进入</string>
-    <string name="drawer_close">关闭</string>
-    <string name="drawer_open">打开</string>
-    <string name="menu_search">搜索</string>
-    <string name="menu_settings">设置</string>
+    <string name="entry">enter</string>
+    <string name="drawer_close">close</string>
+    <string name="drawer_open">open</string>
+    <string name="menu_search">search</string>
+    <string name="menu_settings">setting</string>
+    <string name="home">Home</string>
+    <string name="tech">Tech</string>
+    <string name="itools">iTools</string>
+    <string name="device">Device</string>
+    <string name="mine">Mine</string>
+    <string name="exit">exit</string>
+    <string name="night">night</string>
 </resources>
