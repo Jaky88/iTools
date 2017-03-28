@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -184,6 +185,46 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         }
         mManager.beginTransaction().show(mCurrentFragment).commit();
         return  mCurrentFragment;
+    }
+
+    private void addFragment(Fragment fragment, String tag) {
+        if(mManager == null){
+            mManager = getSupportFragmentManager();
+        }
+
+        mManager.beginTransaction()
+            .add(R.id.main_container,fragment, tag)
+            .addToBackStack(tag)
+            .commit();
+    }
+
+    private void showFragment(Fragment currFragment, String tag) {
+        if(mManager == null){
+            mManager = getSupportFragmentManager();
+        }
+        if(currFragment != null){
+            mManager.beginTransaction()
+                    .hide(currFragment)
+                    .show(currFragment)
+                    .addToBackStack("show fragment3")
+                    .commit();
+        }
+        currFragment = mManager.findFragmentByTag(tag);
+        if(currFragment == null){
+            if(MAIN_FRAGMENT.equals(tag)){
+                mCurrentFragment = new MainFragment();
+            }else {
+                mCurrentFragment = new MenuFragment();
+            }
+            mManager.beginTransaction()
+                    .add(R.id.main_container, mCurrentFragment,tag)
+                    .commit();
+        }else {
+            mManager.beginTransaction()
+                    .show(currFragment)
+                    .addToBackStack("show fragment3")
+                    .commit();
+        }
     }
 
 }
