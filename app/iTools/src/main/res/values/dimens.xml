@@ -5,4 +5,6 @@
     <dimen name="bottom_navigation_height">60dp</dimen>
     <dimen name="bottom_navigation_margin_bottom">8dp</dimen>
     <dimen name="left_drawer_width">240dp</dimen>
+    <dimen name="title_bar_height">45dp</dimen>
+    <dimen name="title_bar_icon_height">35dp</dimen>
 </resources>

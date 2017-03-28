@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/title_bar_height"
+              android:orientation="horizontal">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/title_bar_height"
+        android:scaleType="fitXY"
+        android:drawingCacheQuality="auto"
+        android:src="@drawable/ic_black" />
+    <TextView
+        android:id="@+id/tv_back"
+        android:text="@string/back"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/title_bar_height"/>
+</LinearLayout>
