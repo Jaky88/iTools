@@ -6,11 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,8 +43,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     private ActionBarDrawerToggle mDrawerToggle;
     private String mTitle;
     ActionBar mActionBar;
-    private FragmentManager mManager;
-    private Fragment mCurrentFragment;
+    private Fragment mTempFragment;
     public static String MAIN_FRAGMENT ="main_fragment";
     public static String MENU_FRAGMENT ="menu_fragment";
 
@@ -74,9 +72,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
     private void initData() {
         menuLists = new ArrayList<String>();
-        for (int i = 0; i < 5; i++) menuLists.add("菜单0" + i);
+        for (int i = 1; i <= 5; i++) menuLists.add("菜单" + i);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, menuLists);
         mDrawerList.setAdapter(adapter);
+
     }
 
     private void initEvent() {
@@ -145,86 +144,64 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
         if(position ==0 || position == menuLists.size()+1) return;
-        showSpecifiedFragment(MENU_FRAGMENT, position);
+        MenuFragment f =getMenuFragment(position);
+        switchFragment(f,position);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     private void setDefaultFragment() {
-        mManager = getSupportFragmentManager();
-        mCurrentFragment = new MainFragment();
-        mManager.beginTransaction().replace(R.id.main_container, mCurrentFragment,MAIN_FRAGMENT)
-                .commit();
+        mTempFragment = getMainFragment();
+        switchFragment(mTempFragment,0);
     }
 
     public MainFragment getMainFragment(){
-        return  (MainFragment) mManager.findFragmentByTag(MAIN_FRAGMENT);
+        MainFragment mf= (MainFragment) getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT);
+        if(mf == null){
+            mf = new MainFragment();
+            Bundle b =new Bundle();
+            b.putString("text","主页0");
+            mf.setArguments(b);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.main_container, mf, MAIN_FRAGMENT+0)
+                    .addToBackStack("main")
+                    .commit();
+        }
+        return mf;
     }
 
     public MenuFragment getMenuFragment(int pos){
-        return  (MenuFragment) mManager.findFragmentByTag(MENU_FRAGMENT+pos);
+        MenuFragment mf= (MenuFragment) getSupportFragmentManager().findFragmentByTag(MENU_FRAGMENT+pos);
+        if(mf == null){
+            mf = new MenuFragment();
+            Bundle b =new Bundle();
+            b.putString("text",menuLists.get(pos-1));
+            mf.setArguments(b);
+        }
+        return mf;
     }
 
-    public Fragment showSpecifiedFragment(String tag,int pos){
-        mManager = getSupportFragmentManager();
-        if(mCurrentFragment !=null){
-            mManager.beginTransaction().hide(mCurrentFragment).commit();
-        }
-        mCurrentFragment = mManager.findFragmentByTag(tag);
-        if(mCurrentFragment == null){
-            if(MAIN_FRAGMENT.equals(tag)){
-                mCurrentFragment = new MainFragment();
-            }else if(tag!=null && tag.contains(MENU_FRAGMENT+pos)){
-                mCurrentFragment = new MenuFragment();
-                Bundle args = new Bundle();
-                args.putString("text", menuLists.get(pos-1));
-                mCurrentFragment.setArguments(args);
+    private void switchFragment(Fragment fragment,int pos) {
+        if (fragment != mTempFragment) {
+            if (!fragment.isAdded()) {
+                Bundle b =new Bundle();
+                if(pos == 0){
+                    b.putString("text","主页0");
+                }else {
+                    b.putString("text",menuLists.get(pos-1));
+                }
+                fragment.setArguments(b);
+                getSupportFragmentManager().beginTransaction()
+                        .hide(mTempFragment)
+                        .add(R.id.main_container, fragment)
+                        .commit();
+            } else {
+                getSupportFragmentManager().beginTransaction()
+                        .hide(mTempFragment)
+                        .show(fragment)
+                        .commit();
             }
-            mManager.beginTransaction()
-                    .add(R.id.main_container, mCurrentFragment,tag)
-                    .commit();
-        }
-        mManager.beginTransaction().show(mCurrentFragment).commit();
-        return  mCurrentFragment;
-    }
-
-    private void addFragment(Fragment fragment, String tag) {
-        if(mManager == null){
-            mManager = getSupportFragmentManager();
-        }
-
-        mManager.beginTransaction()
-            .add(R.id.main_container,fragment, tag)
-            .addToBackStack(tag)
-            .commit();
-    }
-
-    private void showFragment(Fragment currFragment, String tag) {
-        if(mManager == null){
-            mManager = getSupportFragmentManager();
-        }
-        if(currFragment != null){
-            mManager.beginTransaction()
-                    .hide(currFragment)
-                    .show(currFragment)
-                    .addToBackStack("show fragment3")
-                    .commit();
-        }
-        currFragment = mManager.findFragmentByTag(tag);
-        if(currFragment == null){
-            if(MAIN_FRAGMENT.equals(tag)){
-                mCurrentFragment = new MainFragment();
-            }else {
-                mCurrentFragment = new MenuFragment();
-            }
-            mManager.beginTransaction()
-                    .add(R.id.main_container, mCurrentFragment,tag)
-                    .commit();
-        }else {
-            mManager.beginTransaction()
-                    .show(currFragment)
-                    .addToBackStack("show fragment3")
-                    .commit();
+            Log.d("===========","=====================fragment==="+fragment.getTag());
+            mTempFragment = fragment;
         }
     }
-
 }

@@ -2,6 +2,7 @@ package com.onyx.itools.fragment;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,8 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         textView = (TextView) view.findViewById(R.id.main_text);
-
-//        String text = getArguments().getString("text");
-        textView.setText("MainFragment");
+        String text = getArguments().getString("text");
+        textView.setText(text);
         return view;
     }
 
