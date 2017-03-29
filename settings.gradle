@@ -1,1 +1,1 @@
-include ':app:itools', ':daolib'
+include ':app:itools', ':libdao'
