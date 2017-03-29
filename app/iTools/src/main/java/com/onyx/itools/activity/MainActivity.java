@@ -5,11 +5,8 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.onyx.itools.R;
-import com.onyx.itools.fragment.MainFragment;
-import com.onyx.itools.fragment.MenuFragment;
+import com.onyx.itools.base.BaseActivity;
+import com.onyx.itools.base.BaseFragment;
+import com.onyx.itools.fragment.FragmentFactory;
 
 import java.util.ArrayList;
 
@@ -34,7 +32,7 @@ import java.util.ArrayList;
  * @Version: V1.0
  * @Description:
  */
-public class MainActivity extends AppCompatActivity implements OnItemClickListener {
+public class MainActivity extends BaseActivity implements OnItemClickListener {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -43,20 +41,12 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     private ActionBarDrawerToggle mDrawerToggle;
     private String mTitle;
     ActionBar mActionBar;
-    private Fragment mTempFragment;
+//    private BaseFragment mCurrentFragment;
     public static String MAIN_FRAGMENT ="main_fragment";
     public static String MENU_FRAGMENT ="menu_fragment";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initView();
-        initData();
-        initEvent();
-    }
-
-    private void initView() {
+    protected void initView() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mActionBar = getSupportActionBar();
@@ -67,24 +57,31 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         LinearLayout footerView = (LinearLayout) getLayoutInflater().inflate(R.layout.drawer_list_footer_view, null);
         mDrawerList.addHeaderView(headerView);
         mDrawerList.addFooterView(footerView);
-        setDefaultFragment();
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         menuLists = new ArrayList<String>();
-        for (int i = 1; i <= 5; i++) menuLists.add("菜单" + i);
+        menuLists.add("主页");
+        menuLists.add("应用");
+        menuLists.add("文件");
+        menuLists.add("设置");
+        menuLists.add("阅读器");
+        menuLists.add("浏览器");
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, menuLists);
         mDrawerList.setAdapter(adapter);
-
+        setDefaultFragment();
+//        mDrawerList.setSelection(0);
     }
 
-    private void initEvent() {
+    @Override
+    protected void initEvent() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.drawable.ic_drawer, R.string.drawer_open,R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                mActionBar.setTitle("请选择");
-                supportInvalidateOptionsMenu(); // Call onPrepareOptionsMenu()
+                mActionBar.setTitle("返回");
+                supportInvalidateOptionsMenu();
             }
 
             @Override
@@ -144,64 +141,28 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
         if(position ==0 || position == menuLists.size()+1) return;
-        MenuFragment f =getMenuFragment(position);
-        switchFragment(f,position);
+        BaseFragment f = FragmentFactory.newFragment(position,menuLists);
+
+        switchFragment(f);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-    private void setDefaultFragment() {
-        mTempFragment = getMainFragment();
-        switchFragment(mTempFragment,0);
+    @Override
+    protected int getContentViewId() {
+        return 0;
     }
 
-    public MainFragment getMainFragment(){
-        MainFragment mf= (MainFragment) getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT);
-        if(mf == null){
-            mf = new MainFragment();
-            Bundle b =new Bundle();
-            b.putString("text","主页0");
-            mf.setArguments(b);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_container, mf, MAIN_FRAGMENT+0)
-                    .addToBackStack("main")
-                    .commit();
-        }
-        return mf;
+    @Override
+    protected int getFragmentContentId() {
+        return R.id.main_container;
     }
 
-    public MenuFragment getMenuFragment(int pos){
-        MenuFragment mf= (MenuFragment) getSupportFragmentManager().findFragmentByTag(MENU_FRAGMENT+pos);
-        if(mf == null){
-            mf = new MenuFragment();
-            Bundle b =new Bundle();
-            b.putString("text",menuLists.get(pos-1));
-            mf.setArguments(b);
-        }
-        return mf;
-    }
-
-    private void switchFragment(Fragment fragment,int pos) {
-        if (fragment != mTempFragment) {
-            if (!fragment.isAdded()) {
-                Bundle b =new Bundle();
-                if(pos == 0){
-                    b.putString("text","主页0");
-                }else {
-                    b.putString("text",menuLists.get(pos-1));
-                }
-                fragment.setArguments(b);
-                getSupportFragmentManager().beginTransaction()
-                        .hide(mTempFragment)
-                        .add(R.id.main_container, fragment)
-                        .commit();
-            } else {
-                getSupportFragmentManager().beginTransaction()
-                        .hide(mTempFragment)
-                        .show(fragment)
-                        .commit();
-            }
-            Log.d("===========","=====================fragment==="+fragment.getTag());
-            mTempFragment = fragment;
-        }
+    @Override
+    protected void setDefaultFragment() {
+        mCurrentFragment=FragmentFactory.newFragment(1,menuLists);
+        getSupportFragmentManager().beginTransaction()
+                .add(getFragmentContentId(), mCurrentFragment,mCurrentFragment.getClass().getSimpleName())
+                .addToBackStack(mCurrentFragment.getClass().getSimpleName())
+                .commit();
     }
 }

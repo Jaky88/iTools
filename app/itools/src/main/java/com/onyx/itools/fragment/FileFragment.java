@@ -7,14 +7,18 @@ import com.onyx.itools.R;
 import com.onyx.itools.base.BaseFragment;
 
 /**
- * Created by 12345 on 2017/3/25.
+ * @Copyright: Copyright © 2017 Onyx International Inc. All rights reserved.
+ * @Project: iTools
+ * @Author: Jack
+ * @Date: 2017/3/30 0030,0:48
+ * @Version: V1.0
+ * @Description: TODO
  */
-
-public class MainFragment extends BaseFragment {
+public class FileFragment extends BaseFragment {
     private TextView textView;
     @Override
     protected int getFragmentLayoutId() {
-        return R.layout.fragment_main;
+        return R.layout.fragment_menu;
     }
 
     @Override
