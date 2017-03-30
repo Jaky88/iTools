@@ -16,7 +16,7 @@ android {
     }
     greendao {
         schemaVersion 1
-        daoPackage 'com.onyx.itools.greendao'
+        daoPackage 'com.onyx.itools.database.greendao'
         targetGenDir 'src/main/java'
     }
 

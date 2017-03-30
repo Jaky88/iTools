@@ -1,4 +1,4 @@
-package com.onyx.itools.greendao;
+package com.onyx.itools.database.greendao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -1,4 +1,4 @@
-package com.onyx.itools.database;
+package com.onyx.itools.database.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
