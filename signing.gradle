@@ -1,0 +1,25 @@
+android {
+    signingConfigs {
+        release {
+            storeFile file(rootProject.projectDir.absolutePath + '/key/jaky-release-key.keystore')
+            storePassword 'jakypwd'
+            keyAlias 'jaky-key'
+            keyPassword 'jakypwd'
+        }
+    }
+    //编译提示输入签名密码
+    //storePassword System.console().readLine("\nKeystore password: ")
+
+    // 创建签名
+    //keytool -genkey -v -keystore jaky-release-key.keystore -alias jaky-key -keyalg RSA -keysize 2048 -validity 10000 生成签名文件
+
+    //为apk签名
+    //jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore stone.keystore unsigned.apk stone 不生成新文件
+
+    //检测apk是否签名
+    // jarsigner  -verbose -certs -verify signed.apk
+
+    //优化apk
+    //zipalign -f -v 4 signed_unaligned.apk signed_aligned.apk
+
+}
