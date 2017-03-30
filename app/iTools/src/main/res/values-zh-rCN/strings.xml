@@ -13,4 +13,8 @@
     <string name="exit">退出</string>
     <string name="night">夜间模式</string>
     <string name="back">返回</string>
+    <string name="app_name_baidu">百度</string>
+    <string name="app_name_tencent">腾讯</string>
+    <string name="app_name_wdj">豌豆荚</string>
+    <string name="desk_name_baidu">百度工具</string>
 </resources>
