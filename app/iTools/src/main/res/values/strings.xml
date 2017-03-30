@@ -13,4 +13,8 @@
     <string name="exit">exit</string>
     <string name="night">night</string>
     <string name="back">Back</string>
+    <string name="app_name_baidu">baidu</string>
+    <string name="app_name_tencent">tencent</string>
+    <string name="app_name_wdj">wandoujia</string>
+    <string name="desk_name_baidu">baiduTools</string>
 </resources>
