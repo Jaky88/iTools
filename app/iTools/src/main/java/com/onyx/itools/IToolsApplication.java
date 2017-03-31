@@ -14,15 +14,17 @@ import android.os.Looper;
  */
 public class IToolsApplication extends Application{
     private final Handler mHandler = new Handler(Looper.getMainLooper());
-    private static IToolsApplication mInstance;
+    private static IToolsApplication sInstance =null;
     public  Handler getHandler() {
         return mHandler;
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        sInstance = this;
+    }
     public static IToolsApplication getInstance(){
-        if(mInstance == null){
-            mInstance = new IToolsApplication();
-        }
-        return mInstance;
+        return sInstance;
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
  * @Author: Jack
  * @Date: 2017/3/25 0025,2:09
  * @Version: V1.0
- * @Description: TODO
+ * @Description: 初次启动引导页
  */
 public class GuideActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewPager mViewPager;

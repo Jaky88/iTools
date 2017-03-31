@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * @Author: Jack
  * @Date: 2017/3/25 0025,2:05
  * @Version: V1.0
- * @Description:
+ * @Description: 主页
  */
 public class MainActivity extends BaseActivity implements OnItemClickListener {
 
