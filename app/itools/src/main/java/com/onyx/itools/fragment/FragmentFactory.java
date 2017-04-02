@@ -3,6 +3,18 @@ package com.onyx.itools.fragment;
 import android.os.Bundle;
 
 import com.onyx.itools.base.BaseFragment;
+import com.onyx.itools.fragment.bottom.DeviceFragment;
+import com.onyx.itools.fragment.bottom.HomeFragment;
+import com.onyx.itools.fragment.bottom.IToolsFragment;
+import com.onyx.itools.fragment.bottom.MimeFragment;
+import com.onyx.itools.fragment.bottom.TechFragment;
+import com.onyx.itools.fragment.side.AppFragment;
+import com.onyx.itools.fragment.side.CustomFragment;
+import com.onyx.itools.fragment.side.ExplorerbFragment;
+import com.onyx.itools.fragment.side.FileFragment;
+import com.onyx.itools.fragment.side.MainFragment;
+import com.onyx.itools.fragment.side.ReaderFragment;
+import com.onyx.itools.fragment.side.SettingsFragment;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +36,11 @@ public class FragmentFactory {
     public static final int READER_FRAGMENT = 5;
     public static final int WEB_FRAGMENT = 6;
     public static final int CUSTOM_FRAGMENT = 7;
+    public static final int HOME_FRAGMENT = 11;
+    public static final int TECH_FRAGMENT = 12;
+    public static final int ITOOLS_FRAGMENT = 13;
+    public static final int DEVICE_FRAGMENT = 14;
+    public static final int MINE_FRAGMENT = 15;
 
     private static Map<Integer, BaseFragment> mFragmentCache =
             new HashMap<Integer, BaseFragment>();
@@ -56,10 +73,29 @@ public class FragmentFactory {
             case CUSTOM_FRAGMENT:
                 fragment = new CustomFragment();
                 break;
+            case HOME_FRAGMENT:
+                fragment = new HomeFragment();
+                break;
+            case TECH_FRAGMENT:
+                fragment = new TechFragment();
+                break;
+            case ITOOLS_FRAGMENT:
+                fragment = new IToolsFragment();
+                break;
+            case DEVICE_FRAGMENT:
+                fragment = new DeviceFragment();
+                break;
+            case MINE_FRAGMENT:
+                fragment = new MimeFragment();
+                break;
         }
-        Bundle b=new Bundle();
-        b.putString("text",menuLists.get(position-1));
-        fragment.setArguments(b);
+
+        if(menuLists != null){
+            Bundle b=new Bundle();
+            b.putString("text",menuLists.get(position-1));
+            fragment.setArguments(b);
+        }
+
         mFragmentCache.put(position, fragment);
         return fragment;
     }

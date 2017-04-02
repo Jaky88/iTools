@@ -1,4 +1,4 @@
-package com.onyx.itools.fragment;
+package com.onyx.itools.fragment.side;
 
 import android.view.View;
 import android.widget.TextView;
@@ -14,11 +14,11 @@ import com.onyx.itools.base.BaseFragment;
  * @Version: V1.0
  * @Description: TODO
  */
-public class FileFragment extends BaseFragment {
+public class ReaderFragment extends BaseFragment {
     private TextView textView;
     @Override
     protected int getFragmentLayoutId() {
-        return R.layout.fragment_menu;
+        return R.layout.fragment_read;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.onyx.itools.fragment;
+package com.onyx.itools.fragment.side;
 
 import android.view.View;
 import android.widget.TextView;
@@ -14,7 +14,7 @@ import com.onyx.itools.base.BaseFragment;
  * @Version: V1.0
  * @Description: TODO
  */
-public class SettingsFragment extends BaseFragment {
+public class CustomFragment extends BaseFragment {
     private TextView textView;
     @Override
     protected int getFragmentLayoutId() {

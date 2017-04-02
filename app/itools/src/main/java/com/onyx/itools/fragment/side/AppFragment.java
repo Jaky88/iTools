@@ -1,4 +1,4 @@
-package com.onyx.itools.fragment;
+package com.onyx.itools.fragment.side;
 
 import android.view.View;
 import android.widget.TextView;
@@ -18,7 +18,7 @@ public class AppFragment extends BaseFragment {
     private TextView textView;
     @Override
     protected int getFragmentLayoutId() {
-        return R.layout.fragment_menu;
+        return R.layout.fragment_application;
     }
 
     @Override
