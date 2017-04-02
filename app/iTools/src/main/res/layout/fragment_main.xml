@@ -35,7 +35,7 @@
             android:id="@+id/rb_tab_3"
             style="@style/onyx_nav_rb_style"
             android:text="@string/itools"
-            android:drawableTop="@drawable/ic_discover"/>
+            android:drawableTop="@drawable/discover_selector"/>
         <RadioButton
             android:id="@+id/rb_tab_4"
             style="@style/onyx_nav_rb_style"

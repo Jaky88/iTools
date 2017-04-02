@@ -51,7 +51,7 @@ public class FragmentFactory {
                 fragment = new ReaderFragment();
                 break;
             case WEB_FRAGMENT:
-                fragment = new WebFragment();
+                fragment = new ExplorerbFragment();
                 break;
             case CUSTOM_FRAGMENT:
                 fragment = new CustomFragment();

@@ -14,7 +14,7 @@ import com.onyx.itools.base.BaseFragment;
  * @Version: V1.0
  * @Description: TODO
  */
-public class WebFragment extends BaseFragment {
+public class ExplorerbFragment extends BaseFragment {
     private TextView textView;
     @Override
     protected int getFragmentLayoutId() {

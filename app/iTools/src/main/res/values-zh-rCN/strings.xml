@@ -17,4 +17,10 @@
     <string name="app_name_tencent">腾讯</string>
     <string name="app_name_wdj">豌豆荚</string>
     <string name="desk_name_baidu">百度工具</string>
+    <string name="home_page">主页</string>
+    <string name="application">应用</string>
+    <string name="file">文件</string>
+    <string name="settings">设置</string>
+    <string name="read">阅读</string>
+    <string name="explorer">浏览</string>
 </resources>

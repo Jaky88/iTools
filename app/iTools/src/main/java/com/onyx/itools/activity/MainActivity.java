@@ -62,12 +62,12 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
     @Override
     protected void initData() {
         menuLists = new ArrayList<String>();
-        menuLists.add("主页");
-        menuLists.add("应用");
-        menuLists.add("文件");
-        menuLists.add("设置");
-        menuLists.add("阅读器");
-        menuLists.add("浏览器");
+        menuLists.add(getString(R.string.home));
+        menuLists.add(getString(R.string.application));
+        menuLists.add(getString(R.string.file));
+        menuLists.add(getString(R.string.settings));
+        menuLists.add(getString(R.string.read));
+        menuLists.add(getString(R.string.explorer));
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, menuLists);
         mDrawerList.setAdapter(adapter);
         setDefaultFragment();
