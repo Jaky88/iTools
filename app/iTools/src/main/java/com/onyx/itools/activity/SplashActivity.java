@@ -43,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        verfacationCode();
+//        verfacationCode();
     }
 
     private void verfacationCode() {

@@ -8,7 +8,7 @@ import com.onyx.itools.fragment.bottom.HomeFragment;
 import com.onyx.itools.fragment.bottom.IToolsFragment;
 import com.onyx.itools.fragment.bottom.MimeFragment;
 import com.onyx.itools.fragment.bottom.TechFragment;
-import com.onyx.itools.fragment.side.AppFragment;
+import com.onyx.itools.fragment.side.ApplicationFragment;
 import com.onyx.itools.fragment.side.CustomFragment;
 import com.onyx.itools.fragment.side.ExplorerbFragment;
 import com.onyx.itools.fragment.side.FileFragment;
@@ -56,7 +56,7 @@ public class FragmentFactory {
                 fragment = new MainFragment();
                 break;
             case APP_FRAGMENT:
-                fragment = new AppFragment();
+                fragment = new ApplicationFragment();
                 break;
             case FILE_FRAGMENT:
                 fragment = new FileFragment();

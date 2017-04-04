@@ -1,5 +1,9 @@
 package com.onyx.itools.utils;
 
+import android.content.Context;
+
+import com.onyx.itools.config.ConfigCenter;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -14,18 +18,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @Description: 封装一个retrofit集成0kHttp3的抽象基类
  */
 public class RetrofitUtils {
-    //服务器路径
-    private static final String API_SERVER = "http://192.168.16.147:8080";
 
     private static Retrofit mRetrofit;
     private static OkHttpClient mOkHttpClient;
 
-    /**
-     * 获取Retrofit对象
-     *
-     * @return
-     */
-    protected static Retrofit getRetrofit() {
+    protected static Retrofit getRetrofit(Context context) {
 
         if (null == mRetrofit) {
 
@@ -33,12 +30,11 @@ public class RetrofitUtils {
                 mOkHttpClient = OkHttp3Utils.getOkHttpClient();
             }
             mRetrofit = new Retrofit.Builder()
-                    .baseUrl(API_SERVER + "/")
+                    .baseUrl(ConfigCenter.getInstance(context).getSeverUrl() + "/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .client(mOkHttpClient)
                     .build();
-
         }
 
         return mRetrofit;

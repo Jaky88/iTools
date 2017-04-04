@@ -2,6 +2,8 @@ package com.onyx.itools.config;
 
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.List;
+
 /**
  * Created by 12345 on 2017/3/25.
  */
@@ -107,6 +109,27 @@ public class JsonObject {
         }
 
         mJson.put(key, value);
+//        invokeCallback(key);
+        return true;
+    }
+
+    public List getList(final String key) {
+        if (isNull()){
+            return null;
+        }
+        Object object = mJson.get(key);
+        if (object instanceof List) {
+            return (List)object;
+        }
+        return null;
+    }
+
+    public boolean putList(final String key, List list) {
+        if (isNull()){
+            return false;
+        }
+
+        mJson.put(key, list);
 //        invokeCallback(key);
         return true;
     }

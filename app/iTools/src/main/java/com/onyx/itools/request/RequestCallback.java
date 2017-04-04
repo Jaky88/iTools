@@ -1,14 +1,20 @@
 package com.onyx.itools.request;
 
+import android.support.annotation.MainThread;
+import android.support.annotation.WorkerThread;
+
 /**
  * Created by 12345 on 2017/3/25.
  */
-public abstract class RequestCallback {
-    public void onPreExecute(BaseRequest request) {
+public abstract class RequestCallback<T> {
+    @MainThread
+    public void onStart() {
     }
 
-    public void onProcess(BaseRequest request) {
-    }
+    @WorkerThread
+    public abstract T onDoInBackground();
 
-    public abstract void onCompleted(BaseRequest request, Exception e);
+    @MainThread
+    public void onResult(T t) {
+    }
 }

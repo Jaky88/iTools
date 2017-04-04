@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.onyx.itools.utils.RawResourceUtil;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -42,5 +43,16 @@ public class ConfigCenter {
 
     public int getSplashDelay() {
         return mJsonObject.getInt(ConfigConstant.SPLASH_DELAY);
+    }
+
+    public List<String> getAppFilters() {
+        if(mJsonObject.hasKey(ConfigConstant.APP_LIST_FILTERS)){
+            return mJsonObject.getList(ConfigConstant.APP_LIST_FILTERS);
+        }
+        return null;
+    }
+
+    public String getSeverUrl() {
+        return mJsonObject.getString(ConfigConstant.SERVER_URL);
     }
 }

@@ -38,39 +38,24 @@ public class OkHttp3Utils {
             .getApplicationContext().getCacheDir().getAbsolutePath(), "MyCache");
     private static Cache cache = new Cache(cacheDirectory, 10 * 1024 * 1024);
 
-
-    /**
-     * 获取OkHttpClient对象
-     *
-     * @return
-     */
     public static OkHttpClient getOkHttpClient() {
 
         if (null == mOkHttpClient) {
-
-            //同样okhttp3后也使用build设计模式
             mOkHttpClient = new OkHttpClient.Builder()
-                    //设置一个自动管理cookies的管理器
-                    .cookieJar(new CookiesManager())
-                    //添加拦截器
-                    //.addInterceptor(new MyIntercepter())
-                    //添加网络连接器
-                    //.addNetworkInterceptor(new CookiesInterceptor(MyApplication.getInstance().getApplicationContext()))
-                    //设置请求读写的超时时间
-                    .connectTimeout(30, TimeUnit.SECONDS)
+
+                    .cookieJar(new CookiesManager())//设置一个自动管理cookies的管理器
+                    //.addInterceptor(new MyIntercepter())//添加拦截器
+                    //.addNetworkInterceptor(new CookiesInterceptor(MyApplication.getInstance().getApplicationContext()))//添加网络连接器
+                    .connectTimeout(30, TimeUnit.SECONDS)//设置请求读写的超时时间
                     .writeTimeout(30, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS)
                     .cache(cache)
                     .build();
-
         }
 
         return mOkHttpClient;
     }
 
-    /**
-     * 拦截器
-     */
     private static class MyIntercepter implements Interceptor {
         @Override
         public Response intercept(Chain chain) throws IOException {
@@ -100,10 +85,6 @@ public class OkHttp3Utils {
         }
     }
 
-
-    /**
-     * 自动管理Cookies
-     */
     private static class CookiesManager implements CookieJar {
         private final PersistentCookieStore cookieStore = new PersistentCookieStore(IToolsApplication.getInstance().getApplicationContext());
 
@@ -123,11 +104,6 @@ public class OkHttp3Utils {
         }
     }
 
-    /**
-     * 判断网络是否可用
-     *
-     * @param context Context对象
-     */
     public static Boolean isNetworkReachable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);

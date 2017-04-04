@@ -5,5 +5,7 @@ package com.onyx.itools.config;
  */
 
 public class ConfigConstant {
-    static public final String SPLASH_DELAY = "splash_delay";
+    public static final String SPLASH_DELAY = "splash_delay";
+    public static final String APP_LIST_FILTERS = "app_list_filters";
+    public static final String SERVER_URL = "server_url";
 }

@@ -2,7 +2,6 @@ package com.onyx.itools.fragment.side;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -67,7 +66,6 @@ public class MainFragment extends BaseFragment {
 
         @Override
         public void onPageSelected(int position) {
-            Log.d("======","=========position========="+position);
             mRgMain.check(mRgMain.getChildAt(position).getId());
         }
 
@@ -100,7 +98,6 @@ public class MainFragment extends BaseFragment {
                     break;
             }
             mVpMain.setCurrentItem(item);
-            Log.d("======","=========checkedId========="+checkedId);
         }
     }
 }
