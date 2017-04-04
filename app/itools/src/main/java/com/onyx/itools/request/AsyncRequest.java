@@ -12,35 +12,41 @@ import java.util.concurrent.Executors;
 /**
  * Created by 12345 on 2017/3/25.
  */
-public class AsyncRequest<T> {
+public class AsyncRequest<I, O> {
     public final static int DEFAULT_REQUEST = 0;
     public final static int NATIVE_DATA_REQUEST = 1;
     public final static int REMOTE_DATA_REQUEST = 2;
 
     private static Handler handler;
-    private  RequestCallback<T> callback;
-    private  int  requestType = 0;
+    private RequestCallback<I, O> callback;
+    private int requestType = 0;
+    private I i;
     private static ExecutorService executorService = Executors.newFixedThreadPool(15);
 
-    public AsyncRequest(int requestType, RequestCallback<T> callback){
+    public AsyncRequest(int requestType, I i, RequestCallback<I, O> callback) {
         this.requestType = requestType;
         this.callback = callback;
+        this.i = i;
+    }
+
+    public AsyncRequest(int requestType, RequestCallback<I, O> callback) {
+        new AsyncRequest(requestType, new Object(), callback);
     }
 
     public void execute() {
-        callback.onStart();
+        callback.onStart(i);
         run();
     }
 
     private void run() {
-        if(requestType == 2){
-            NetWorks.verfacationCodeGet("15910435235", "123456",null);
-        } else{
+        if (requestType == 2) {
+            NetWorks.verfacationCodeGet("15910435235", "123456", null);
+        } else {
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
                     Message message = Message.obtain();
-                    message.obj = new ResultData<T>(AsyncRequest.this, callback.onDoInBackground());
+                    message.obj = new ResultData<O>(AsyncRequest.this, callback.onDoInBackground(i));
                     getHandler().sendMessage(message);
                 }
             });
@@ -56,7 +62,7 @@ public class AsyncRequest<T> {
         this.requestType = requestType;
     }
 
-    private static class MyHandler<T> extends Handler {
+    private static class MyHandler<O> extends Handler {
 
         public MyHandler(Looper looper) {
             super(looper);
@@ -65,7 +71,7 @@ public class AsyncRequest<T> {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            ResultData<T> resultData = (ResultData<T>) msg.obj;
+            ResultData<O> resultData = (ResultData<O>) msg.obj;
             resultData.asyncRequest.callback.onResult(resultData.data);
         }
     }
@@ -82,17 +88,15 @@ public class AsyncRequest<T> {
     }
 
 
-
-    private static class ResultData<T> {
+    private static class ResultData<O> {
         AsyncRequest asyncRequest;
-        T data;
+        O data;
 
-        public ResultData(AsyncRequest asyncRequest, T data) {
+        public ResultData(AsyncRequest asyncRequest, O data) {
             this.asyncRequest = asyncRequest;
             this.data = data;
         }
     }
-
 
 
 }
