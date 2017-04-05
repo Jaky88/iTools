@@ -28,7 +28,6 @@ import java.util.List;
  * @Description: TODO
  */
 public class ApplicationFragment extends BaseFragment {
-    private TextView textView;
     private GridLayout mGlApp;
 
     @Override
