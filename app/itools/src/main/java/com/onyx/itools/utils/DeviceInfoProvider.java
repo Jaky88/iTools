@@ -20,7 +20,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 
@@ -40,33 +42,31 @@ public class DeviceInfoProvider {
         return null;
     }
 
-    public static DeviceInfoBean.SystemInfo getSystemInfo(Context context) {
-        DeviceInfoBean bean=new DeviceInfoBean();
+//    public static DeviceInfoBean.SystemInfo getSystemInfo(Context context) {
+    public static Map<String, String> getSystemInfo(Context context) {
+        DeviceInfoBean bean = new DeviceInfoBean();
+        Map<String, String> map = new HashMap<>();
         TimeZone tz = TimeZone.getDefault();
-        bean.systemInfo.osName = System.getProperty("");
-        bean.systemInfo.osVersion=Build.VERSION.RELEASE;
-        bean.systemInfo.osVersionNum=Build.VERSION.SDK_INT;
-        bean.systemInfo.sdkVersion =Build.VERSION.SDK;
-        bean.systemInfo.timeZone = tz.getID();
-        bean.systemInfo.bootVersion = Build.BOOTLOADER;
-        bean.systemInfo.kernelVersion = getKernelVersion();
-        String javaVersion;
-        String javaClassVersion;
-        String javaClassPath;
-        String javaHome;
-        return bean.systemInfo;
+        map.put("osName", System.getProperty("os.name"));
+        map.put("osVersion", Build.VERSION.RELEASE);
+        map.put("osVersionNum", ""+Build.VERSION.SDK_INT);
+        map.put("sdkVersion", Build.VERSION.SDK);
+        map.put("timeZone", tz.getID());
+        map.put("bootVersion", Build.BOOTLOADER);
+        map.put("kernelVersion", getKernelVersion());
+        return map;
     }
 
     public static DeviceInfoBean getDeviceInfo(Context context) {
         String mobileName = Build.MODEL;
         String osVersion = Build.VERSION.RELEASE;
         String modelAlias;
-        String branch=Build.BRAND;
+        String branch = Build.BRAND;
         String vendor;
         String serialNum;
         String deviceID = Build.ID;
         String simSerialNum;
-        String board=Build.BOARD;
+        String board = Build.BOARD;
 
         DeviceInfoBean dInfo = new DeviceInfoBean();
         dInfo.deviceInfo.setModel(Build.DEVICE);
@@ -79,19 +79,19 @@ public class DeviceInfoProvider {
     }
 
     public static DeviceInfoBean.CpuInfo getCpuInfo(Context context) {
-        DeviceInfoBean bean=new DeviceInfoBean();
+        DeviceInfoBean bean = new DeviceInfoBean();
         String name;
         String arch;
         String core;
-        String abi=Build.CPU_ABI;
+        String abi = Build.CPU_ABI;
         String accelerator;
         String frequency;
         String useRate;
         String openGL;
 
         String str1 = "/proc/cpuinfo";
-        String str2="";
-        String[] cpuInfo={"",""};
+        String str2 = "";
+        String[] cpuInfo = {"", ""};
         String[] arrayOfString;
         try {
             FileReader fr = new FileReader(str1);
@@ -172,8 +172,8 @@ public class DeviceInfoProvider {
         return totalBlocks * blockSize;
     }
 
-    public String[] getVersion(){
-        String[] version={"null","null","null","null"};
+    public String[] getVersion() {
+        String[] version = {"null", "null", "null", "null"};
         String str1 = "/proc/version";
         String str2;
         String[] arrayOfString;
@@ -183,13 +183,13 @@ public class DeviceInfoProvider {
                     localFileReader, 8192);
             str2 = localBufferedReader.readLine();
             arrayOfString = str2.split("\\s+");
-            version[0]=arrayOfString[2];//KernelVersion
+            version[0] = arrayOfString[2];//KernelVersion
             localBufferedReader.close();
         } catch (IOException e) {
         }
         version[1] = Build.VERSION.RELEASE;// firmware version
-        version[2]=Build.MODEL;//model
-        version[3]=Build.DISPLAY;//system version
+        version[2] = Build.MODEL;//model
+        version[3] = Build.DISPLAY;//system version
         return version;
     }
 
@@ -218,18 +218,19 @@ public class DeviceInfoProvider {
     };
 
 
-    public String[] getOtherInfo(Context context){
-        String[] other={"null","null"};
+    public String[] getOtherInfo(Context context) {
+        String[] other = {"null", "null"};
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-        if(wifiInfo.getMacAddress()!=null){
-            other[0]=wifiInfo.getMacAddress();
+        if (wifiInfo.getMacAddress() != null) {
+            other[0] = wifiInfo.getMacAddress();
         } else {
             other[0] = "Fail";
         }
         other[1] = getTimes(context);
         return other;
     }
+
     private String getTimes(Context context) {
         long ut = SystemClock.elapsedRealtime() / 1000;
         if (ut == 0) {
@@ -243,11 +244,11 @@ public class DeviceInfoProvider {
 
     public String formatSize(long size) {
         String suffix = null;
-        float fSize=0;
+        float fSize = 0;
 
         if (size >= 1024) {
             suffix = "KB";
-            fSize=size / 1024;
+            fSize = size / 1024;
             if (fSize >= 1024) {
                 suffix = "MB";
                 fSize /= 1024;
@@ -269,7 +270,7 @@ public class DeviceInfoProvider {
 
     public static String getKernelVersion() {
         Process process = null;
-        String kernelVersion ="";
+        String kernelVersion = "";
 
         try {
             process = Runtime.getRuntime().exec("cat /proc/version");
@@ -280,7 +281,7 @@ public class DeviceInfoProvider {
         InputStream inputStream = process.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader, 8 * 1024);
-        String result ="";
+        String result = "";
         String info;
 
         try {
@@ -293,7 +294,7 @@ public class DeviceInfoProvider {
 
         try {
             if (result != "") {
-                String keyword = "version" ;
+                String keyword = "version";
                 int index = result.indexOf(keyword);
                 info = result.substring(index + keyword.length());
                 index = info.indexOf("");

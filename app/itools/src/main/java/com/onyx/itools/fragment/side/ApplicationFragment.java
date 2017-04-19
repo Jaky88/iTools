@@ -51,9 +51,9 @@ public class ApplicationFragment extends BaseFragment {
 
     @SuppressWarnings("unchecked")
     private void loadInstalledApps() {
-        new AsyncRequest(AsyncRequest.DEFAULT_REQUEST,new Object(), new RequestCallback<Object, List<AppInfoBean>>() {
+        new AsyncRequest(AsyncRequest.DEFAULT_REQUEST, new RequestCallback<List<AppInfoBean>>() {
             @Override
-            public List<AppInfoBean> onDoInBackground(Object o) {
+            public List<AppInfoBean> onDoInBackground() {
                 return AppInfoProvider.getInstallAppsInfo(getActivity(), AppInfoProvider.FILTER_THIRD_APP);
             }
 

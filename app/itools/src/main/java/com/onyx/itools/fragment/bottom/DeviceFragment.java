@@ -14,12 +14,15 @@ import com.onyx.itools.request.AsyncRequest;
 import com.onyx.itools.request.RequestCallback;
 import com.onyx.itools.utils.DeviceInfoProvider;
 
+import java.util.Map;
+
 /**
  * Created by 12345 on 2017/3/25.
  */
 
 public class DeviceFragment extends BaseFragment {
     private GridLayout mGlDevice;
+
     @Override
     protected int getFragmentLayoutId() {
         return R.layout.fragment_device;
@@ -39,31 +42,30 @@ public class DeviceFragment extends BaseFragment {
 
     @SuppressWarnings("unchecked")
     private void loadDeviceInfo() {
-        new AsyncRequest(AsyncRequest.DEFAULT_REQUEST,new Object(), new RequestCallback<Object, DeviceInfoBean>() {
+        new AsyncRequest(AsyncRequest.DEFAULT_REQUEST, new RequestCallback<Map<String,String>>() {
             @Override
-            public DeviceInfoBean onDoInBackground(Object in) {
-                DeviceInfoBean bean =new DeviceInfoBean();
-                bean.systemInfo=DeviceInfoProvider.getSystemInfo(getActivity());
-                return bean;
+            public Map<String,String> onDoInBackground() {
+                Map<String,String> map = DeviceInfoProvider.getSystemInfo(getActivity());
+                return map;
             }
 
             @Override
-            public void onResult(DeviceInfoBean bean) {
-                if (bean == null ) {
+            public void onResult(Map<String,String> map) {
+                if (map == null) {
                     return;
                 }
-                LinearLayout itemView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.item_device_info, null, false);
-                TextView tvKey = (TextView) itemView.findViewById(R.id.tv_info_key);
-                TextView tvValue = (TextView) itemView.findViewById(R.id.tv_info_value);
-
-                tvKey.setText(bean.systemInfo.osName);
-                tvValue.setText(bean.systemInfo.osName);
-
-                GridLayout.Spec rowSpec = GridLayout.spec(0);
-                GridLayout.Spec columnSpec = GridLayout.spec(0);
-                GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
-                params.setGravity(Gravity.END);
-                mGlDevice.addView(itemView, params);
+                int i = 0;
+                for (String key : map.keySet()) {
+                    LinearLayout itemView = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.item_device_info, null, false);
+                    TextView tvKey = (TextView) itemView.findViewById(R.id.tv_info_key);
+                    TextView tvValue = (TextView) itemView.findViewById(R.id.tv_info_value);
+                    tvKey.setText(key+":");
+                    tvValue.setText(map.get(key));
+                    GridLayout.Spec rowSpec = GridLayout.spec(i++);
+                    GridLayout.Spec columnSpec = GridLayout.spec(0);
+                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
+                    mGlDevice.addView(itemView, params);
+                }
             }
         }).execute();
     }
