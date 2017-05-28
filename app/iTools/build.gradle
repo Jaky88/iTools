@@ -3,10 +3,20 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'org.greenrobot.greendao'
 apply from: file(rootProject.projectDir.absolutePath + '/versioning.gradle')
 apply from: file(rootProject.projectDir.absolutePath + '/signing.gradle')
-def multiChannelEnabled = false
-if(multiChannelEnabled){
+
+def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
+def multiChannelEnabled = true
+if (multiChannelEnabled) {
     apply from: file(rootProject.projectDir.absolutePath + '/mutichannel.gradle')
 }
+
+lint.doLast {
+    ('bash +x ./clean_apk.sh').execute()
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -18,13 +28,13 @@ android {
         versionCode gitVersionCode(projectDir)
         versionName gitVersionCode(projectDir).toString() + " - " + gitHash(projectDir)
         multiDexEnabled true
+        manifestPlaceholders = [APP_NAME: "@string/app_name", applicationName:"iTools"]
     }
     greendao {
         schemaVersion 1
         daoPackage 'com.onyx.itools.database.greendao'
         targetGenDir 'src/main/java'
     }
-
 
     buildTypes {
         release {
@@ -35,19 +45,52 @@ android {
     }
 
     sourceSets.main {
-        java.srcDirs = ['src/main/java','src/main/java-gen']
-	    jniLibs.srcDir 'src/main/libs' //set libs as .so's location instead of jniLibs
-	    jni.srcDirs = [] //disable automatic ndk-build call with auto-generated Android.mk
-	}
+        java.srcDirs = ['src/main/java', 'src/main/java-gen']
+        jniLibs.srcDir 'src/main/libs' //set libs as .so's location instead of jniLibs
+        jni.srcDirs = [] //disable automatic ndk-build call with auto-generated Android.mk
+    }
 
-	dexOptions {
+    def deleteValueFile = {variant ->
+        File valuesFile = file("${buildDir}/intermediates/res/merged/${variant.dirName}/values/values.xml");
+        try {
+            println 'delete path：' + valuesFile.absolutePath;
+            valuesFile.delete();
+            valuesFile1.delete();
+        }catch (Exception e) {
+            println 'delete exception：' + e.getMessage();
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        def runTasks = gradle.startParameter.taskNames
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = "${variant.productFlavors[0].manifestPlaceholders.applicationName}-${variant.buildType.name}.apk"
+                //fileName = "${rootProject.name}-${variant.productFlavors[0].name}-${defaultConfig.versionCode}-${releaseTime()}.apk"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+
+            if(Consts.buildTypeRelease in runTasks || Consts.buildTypeRunRelease in runTasks) {
+                deleteValueFile(variant);
+            }
+        }
+    }
+
+    dexOptions {
         preDexLibraries = false
     }
-    
-	lintOptions {
+
+    lintOptions {
         abortOnError false
     }
-    buildToolsVersion '25.0.2'
+}
+
+interface Consts {
+    final String buildTypeRelease = 'assembleRelease';
+    final String buildTypeDebug = 'assembleDebug';
+    final String buildTypeRunDebug = ':app:assembleDebug';
+    final String buildTypeRunRelease = ':app:assembleRelease';
 }
 
 dependencies {
@@ -63,21 +106,17 @@ dependencies {
     compile 'com.android.support:design:22.2.0'
     //greendao
     compile 'org.greenrobot:greendao:3.0.0'
-    compile'org.greenrobot:greendao-generator:3.0.0'
+    compile 'org.greenrobot:greendao-generator:3.0.0'
     //retrofit2.0+okhttp3+rxjava
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile "com.squareup.retrofit2:converter-scalars:2.1.0"
+    compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.okio:okio:1.9.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
-
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
-
     compile 'com.github.pwittchen:reactivenetwork:0.1.3'
-
 }

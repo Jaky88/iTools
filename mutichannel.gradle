@@ -1,7 +1,17 @@
 android {
     productFlavors {
-        baidu {}
-        tencent {}
-        wandoujia {}
+        onyx {
+            applicationId 'com.onyx.itools'
+            manifestPlaceholders = [APP_NAME: "@string/app_name", applicationName:"OnyxTools"]
+        }
+        jaky {
+            applicationId 'com.jaky.itools'
+            //resValue "string", "app_name", "MyTools"
+            manifestPlaceholders = [APP_NAME: "@string/app_name", applicationName:"JakyTools"]
+        }
+        other {
+            applicationId 'com.other.itools'
+            manifestPlaceholders = [APP_NAME: "@string/app_name", applicationName:"iTools"]
+        }
     }
 }

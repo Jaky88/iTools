@@ -13,10 +13,10 @@
     <string name="exit">exit</string>
     <string name="night">night</string>
     <string name="back">Back</string>
-    <string name="app_name_baidu">baidu</string>
-    <string name="app_name_tencent">tencent</string>
-    <string name="app_name_wdj">wandoujia</string>
-    <string name="desk_name_baidu">baiduTools</string>
+    <string name="app_name_onyx">OnxyTools</string>
+    <string name="app_name_jaky">MyTools</string>
+    <string name="app_name_other">iTools</string>
+    <string name="desk_name_onyx">OnyxTools</string>
     <string name="home_page">Home</string>
     <string name="application">Application</string>
     <string name="file">File</string>
