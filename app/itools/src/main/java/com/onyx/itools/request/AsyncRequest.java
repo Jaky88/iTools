@@ -12,29 +12,23 @@ import java.util.concurrent.Executors;
 /**
  * Created by 12345 on 2017/3/25.
  */
-public class AsyncRequest<I, O> {
+public class AsyncRequest<ResultData> {
     public final static int DEFAULT_REQUEST = 0;
     public final static int NATIVE_DATA_REQUEST = 1;
     public final static int REMOTE_DATA_REQUEST = 2;
 
     private static Handler handler;
-    private RequestCallback<I, O> callback;
+    private RequestCallback<ResultData> callback;
     private int requestType = 0;
-    private I i;
     private static ExecutorService executorService = Executors.newFixedThreadPool(15);
 
-    public AsyncRequest(int requestType, I i, RequestCallback<I, O> callback) {
+    public AsyncRequest(int requestType, RequestCallback< ResultData> callback) {
         this.requestType = requestType;
         this.callback = callback;
-        this.i = i;
-    }
-
-    public AsyncRequest(int requestType, RequestCallback<I, O> callback) {
-        new AsyncRequest(requestType, new Object(), callback);
     }
 
     public void execute() {
-        callback.onStart(i);
+        callback.onStart();
         run();
     }
 
@@ -46,7 +40,7 @@ public class AsyncRequest<I, O> {
                 @Override
                 public void run() {
                     Message message = Message.obtain();
-                    message.obj = new ResultData<O>(AsyncRequest.this, callback.onDoInBackground(i));
+                    message.obj = new AsyncRequest.ResultData(AsyncRequest.this, callback.onDoInBackground());
                     getHandler().sendMessage(message);
                 }
             });
@@ -62,7 +56,7 @@ public class AsyncRequest<I, O> {
         this.requestType = requestType;
     }
 
-    private static class MyHandler<O> extends Handler {
+    private static class MyHandler<ResultData> extends Handler {
 
         public MyHandler(Looper looper) {
             super(looper);
@@ -71,7 +65,7 @@ public class AsyncRequest<I, O> {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            ResultData<O> resultData = (ResultData<O>) msg.obj;
+            AsyncRequest.ResultData resultData = (AsyncRequest.ResultData) msg.obj;
             resultData.asyncRequest.callback.onResult(resultData.data);
         }
     }
@@ -88,11 +82,11 @@ public class AsyncRequest<I, O> {
     }
 
 
-    private static class ResultData<O> {
+    private static class ResultData<Data> {
         AsyncRequest asyncRequest;
-        O data;
+        Data data;
 
-        public ResultData(AsyncRequest asyncRequest, O data) {
+        public ResultData(AsyncRequest asyncRequest, Data data) {
             this.asyncRequest = asyncRequest;
             this.data = data;
         }

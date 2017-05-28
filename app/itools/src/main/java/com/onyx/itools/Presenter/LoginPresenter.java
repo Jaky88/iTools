@@ -23,17 +23,16 @@ public class LoginPresenter {
     @SuppressWarnings("unchecked")
     public void userLogin(final String userName, final String password) {
 
-        new AsyncRequest<UserInfoBean,LoginResultBean>(AsyncRequest.REMOTE_DATA_REQUEST,userInfoBean,
-                new RequestCallback<UserInfoBean, LoginResultBean>() {
+        new AsyncRequest(AsyncRequest.REMOTE_DATA_REQUEST, new RequestCallback<LoginResultBean>() {
                     @Override
-                    public void onStart(UserInfoBean userInfoBean) {
+                    public void onStart() {
                         userInfoBean.setUserName(userName);
                         userInfoBean.setUserPwd(password);
                         userInfoBean.setVerfacationCode("");
                     }
 
                     @Override
-                    public LoginResultBean onDoInBackground(UserInfoBean userInfoBean) {
+                    public LoginResultBean onDoInBackground() {
                         return null;
                     }
 

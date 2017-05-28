@@ -6,15 +6,15 @@ import android.support.annotation.WorkerThread;
 /**
  * Created by 12345 on 2017/3/25.
  */
-public abstract class RequestCallback<I,O> {
+public abstract class RequestCallback<ResultData> {
     @MainThread
-    public void onStart(I i) {
+    public void onStart() {
     }
 
     @WorkerThread
-    public abstract O onDoInBackground(I i);
+    public abstract ResultData onDoInBackground();
 
     @MainThread
-    public void onResult(O o) {
+    public void onResult(ResultData resultData) {
     }
 }

@@ -26,10 +26,10 @@ public class DeviceInfoBean {
         public String timeZone;
         public String bootVersion;
         public String kernelVersion;
-        public String javaVersion;
-        public String javaClassVersion;
-        public String javaClassPath;
-        public String javaHome;
+//        public String javaVersion;
+//        public String javaClassVersion;
+//        public String javaClassPath;
+//        public String javaHome;
     }
 
     public class DeviceInfo{
