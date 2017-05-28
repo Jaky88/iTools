@@ -37,6 +37,16 @@ public class MainFragment extends BaseFragment {
         initRadioGroup(view);
     }
 
+    @Override
+    protected void intData() {
+
+    }
+
+    @Override
+    protected void intEvent() {
+
+    }
+
     private void initViewPager(View parentView) {
         mVpMain = (ViewPager) parentView.findViewById(R.id.vp_main);
         mFragList = new ArrayList<Fragment>();

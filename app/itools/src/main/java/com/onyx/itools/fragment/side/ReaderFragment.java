@@ -27,4 +27,14 @@ public class ReaderFragment extends BaseFragment {
         String text = getArguments().getString("text");
         textView.setText(text);
     }
+
+    @Override
+    protected void intData() {
+
+    }
+
+    @Override
+    protected void intEvent() {
+
+    }
 }

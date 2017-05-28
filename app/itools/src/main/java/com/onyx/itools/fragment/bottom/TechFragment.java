@@ -25,4 +25,14 @@ public class TechFragment extends BaseFragment {
             textView.setText(text);
         }
     }
+
+    @Override
+    protected void intData() {
+
+    }
+
+    @Override
+    protected void intEvent() {
+
+    }
 }

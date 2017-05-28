@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 /**
  * @Copyright: Copyright © 2017 Onyx International Inc. All rights reserved.
@@ -26,7 +27,17 @@ public abstract class BaseFragment  extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
+        intData();
+        intEvent();
     }
 
     protected abstract void initView(View view);
+
+    protected abstract void intData();
+
+    protected abstract void intEvent();
+
+    public void toast(CharSequence msg){
+        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
+    }
 }

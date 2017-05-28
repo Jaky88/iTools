@@ -42,6 +42,16 @@ public class ApplicationFragment extends BaseFragment {
 
     }
 
+    @Override
+    protected void intData() {
+
+    }
+
+    @Override
+    protected void intEvent() {
+
+    }
+
     private void initGridLayout(View parentView) {
         mGlApp = (GridLayout) parentView.findViewById(R.id.gl_app);
         mGlApp.removeAllViews();

@@ -1,6 +1,7 @@
 package com.onyx.itools.utils;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
@@ -23,6 +24,15 @@ public class ActivityUtil {
     public static void startActivity(Context context, String packageName) {
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
 
+        if (intent != null) {
+            context.startActivity(intent);
+        }
+    }
+
+    public static void startComponent(Context context, String packageName, String className) {
+        Intent intent = new Intent();
+        ComponentName component = new ComponentName(packageName, className);
+        intent.setComponent(component);
         if (intent != null) {
             context.startActivity(intent);
         }

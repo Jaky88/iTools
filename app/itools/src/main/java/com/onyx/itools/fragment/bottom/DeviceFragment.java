@@ -1,6 +1,5 @@
 package com.onyx.itools.fragment.bottom;
 
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridLayout;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 
 import com.onyx.itools.R;
 import com.onyx.itools.base.BaseFragment;
-import com.onyx.itools.entity.DeviceInfoBean;
 import com.onyx.itools.request.AsyncRequest;
 import com.onyx.itools.request.RequestCallback;
 import com.onyx.itools.utils.DeviceInfoProvider;
@@ -31,6 +29,16 @@ public class DeviceFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         initGridLayout(view);
+    }
+
+    @Override
+    protected void intData() {
+
+    }
+
+    @Override
+    protected void intEvent() {
+
     }
 
     private void initGridLayout(View parentView) {
