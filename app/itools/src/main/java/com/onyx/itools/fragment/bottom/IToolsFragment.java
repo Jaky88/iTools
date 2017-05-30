@@ -54,7 +54,11 @@ public class IToolsFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_open_adb:
-                openAdb(getActivity());
+                try {
+                    openAdb(getActivity());
+                }catch (Exception e){
+                    toast("非系统权限，无法打开USB调试！");
+                }
                 break;
             case R.id.btn_open_settings:
                 ActivityUtil.startComponent(getActivity(), "com.android.settings",
